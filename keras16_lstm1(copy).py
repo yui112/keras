@@ -13,6 +13,14 @@ print(y.shape)  # (13,)
 
 x = x.reshape(x.shape[0], x.shape[1], 1)
 
+from keras.callbacks import EarlyStopping, TensorBoard 
+
+tb_hist = TensorBoard(log_dir='./graph',
+                      histogram_freq=0,
+                      write_grads=True,
+                      write_images=True)
+
+early_stopping = EarlyStopping(monitor='loss', patience= 20, mode = 'auto')
 
 # 2. 모델구성
 model = Sequential()
@@ -43,11 +51,11 @@ model.add(Dense(1))
 model.summary()
 
 # # 3. 훈련
-# model.compile(loss='mse', optimizer='adam', metrics=['mae'])  
+model.compile(loss='mse', optimizer='adam', metrics=['mae'])  
 
 # from keras.callbacks import EarlyStopping
 # early_stopping = EarlyStopping(monitor= 'acc', patience= 20, mode = 'max') 
-# model.fit(x, y, epochs=1000, batch_size=1, verbose=1, callbacks=[early_stopping])  
+model.fit(x, y, epochs=1000, batch_size=1, verbose=1, callbacks = [early_stopping, tb_hist])  
 
 # # 4. 평가예측
 # loss, mae = model.evaluate(x, y, batch_size=1)

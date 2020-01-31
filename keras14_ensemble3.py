@@ -41,6 +41,18 @@ print(y3_val.shape)
 from keras.models import Sequential, Model
 from keras.layers import Dense, Input
 
+
+from keras.callbacks import EarlyStopping, TensorBoard # Epoch 을 많이 돌린 후, 특정 시점에서 멈추는 것, 과적합 방지
+
+tb_hist = TensorBoard(log_dir='./graph',
+                      histogram_freq = 0,
+                      write_graph = True,
+                      write_images=True)
+
+early_stopping = EarlyStopping(monitor='loss', patience= 20, mode = 'auto')
+
+
+
 #함수형 모델 1
 input1 = Input(shape = (3, ))
 dense1 = Dense(50)(input1)
@@ -80,7 +92,8 @@ model.summary()
 # 훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mse']) # mse, mae 사용
 model.fit(x1_train, [y1_train,y2_train,y3_train], 
-          epochs=100, batch_size = 1, validation_data = (x1_val,[y1_val,y2_val,y3_val])) 
+          epochs=100, batch_size = 1, validation_data = (x1_val,[y1_val,y2_val,y3_val]),
+          callbacks = [early_stopping, tb_hist]) 
 
 # 평가예측
 aaa = model.evaluate(x1_test, [y1_test, y2_test, y3_test], batch_size = 1)
