@@ -6,7 +6,7 @@ x = array([[1,2,3],[2,3,4],[3,4,5],[4,5,6],[6,7,8]])
 y = array([4,5,6,7,8])
 
 x = x.reshape(x.shape[0], x.shape[1], 1)
-
+print(x.shape)
 model = Sequential()
 model.add(LSTM(10, activation='relu', input_shape=(3,1)))
 model.add(Dense(5))
@@ -23,7 +23,7 @@ model.summary()
 
 model.compile(loss='mse', optimizer='adam', metrics=['mse']) # mse, mae 사용
 model.fit(x, y, 
-          epochs=100, batch_size = 1) 
+          epochs=10, batch_size = 1) 
 
 # 평가예측
 loss, mae = model.evaluate(x,y, batch_size = 1)
