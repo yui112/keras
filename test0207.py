@@ -75,7 +75,7 @@ model.compile(loss='mse', optimizer='adam',
 
 early_stopping = EarlyStopping(patience=20)
 
-model.fit(xs_train, ys_train, epochs=750, batch_size = 5, callbacks=[early_stopping]) 
+model.fit(xs_train, ys_train, epochs=1500, batch_size = 5, callbacks=[early_stopping]) 
 
 #결과예측
 loss, mse = model.evaluate(xs_test, ys_test,batch_size=1)
@@ -101,6 +101,6 @@ feb07_samsung = model.predict(feb06_samsung)
 print(feb07_samsung)
 
 # 2월7일 종가 예측
-# mse :  739.3754272460938
-# RMSE: 925.8948747203557
-# [[60866.773]]
+# mse :  399.8163757324219
+# RMSE: 481.2220391103983
+# [[60167.508]]
